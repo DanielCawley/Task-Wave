@@ -1,0 +1,15 @@
+.Display {
+    display:flex;
+
+}
+
+.formCheckClass {
+    
+    /* white-space: normal; Allow text to wrap */
+    /* display:inline-flex; Make sure the label doesn't take up the entire line */
+    /* text-overflow: ; */
+    color:rgb(215, 89, 244);
+    width: 55rem;
+
+}
+
