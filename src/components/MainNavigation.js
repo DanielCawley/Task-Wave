@@ -2,6 +2,7 @@ import React from "react";
 // import Login from "./Login";
 import classes from "./MainNavigation.module.css";
 import FirebaseLogin from "./FirebaseLogin";
+import FirebaseSignup from "./FirebaseSignup";
 import image from "../icons/Sea-wave-icon-cartoon-style-vector.jpg";
 
 const MainNavigation = () => {
@@ -13,7 +14,10 @@ const MainNavigation = () => {
         <img src={image} />
         <img src={image} />
         <img src={image} />
-        <FirebaseLogin />
+        <div className={classes.firebase}>
+          <FirebaseLogin />
+          <FirebaseSignup />
+        </div>
       </div>
     </div>
   );

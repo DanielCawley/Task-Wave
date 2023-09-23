@@ -7,6 +7,7 @@ import MainNavigation from "./components/MainNavigation";
 // import { Button } from "bootstrap";
 import image from "./icons/Sea-wave-icon-cartoon-style-vector.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
+import AddTodos from "./components/AddTodos";
 
 import {
   Button,
@@ -21,43 +22,32 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = () => {
-    const newTodo = inputRef.current.value.trim(); // Remove leading/trailing whitespace
-    if (newTodo) {
-      setTodos((prev) => [...prev, newTodo]);
-      inputRef.current.value = ""; // Clear the input field
-      inputRef.current.focus();
-    } // Focus on the input field
+  const updateDisplayedTodos = (data) => {
+    setTodos(data);
+    // here i can also update to firebase
+    addTodosToFirebase(data);
+  };
+
+  const addTodosToFirebase = async (data) => {
+    console.log("adding", data, "to firebase");
+    // const response = await fetch(
+    //   "https://console.firebase.google.com/u/0/project/task-wave/database/task-wave-default-rtdb/data/~2F",
+    //   {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //     headers: {
+    //       "Content-Type": "appliation/json",
+    //     },
+    //   }
+    // );
+    // console.log("Response:", response);
   };
 
   return (
     <div className="App">
       <MainNavigation />
       <body className="App-main">
-        <div className="App-input">
-          <Form>
-            <Form.Control
-              style={{ width: "35rem", height: "2rem" }}
-              ref={inputRef}
-              placeholder="Enter to-do"
-              onChange={() => {
-                // console.log("onChange");
-                // console.log("inputRef.current.length", inputRef.current.value.length);
-                if (inputRef.current.value.length > 80) {
-                  console.log("error message");
-                }
-              }}
-            />
-          </Form>
-
-          <Button
-            variant="primary"
-            onClick={handleSubmit}
-            style={{ height: "3rem" }}
-          >
-            Enter to-do
-          </Button>
-        </div>
+        <AddTodos callUpdateDisplayedTodos={updateDisplayedTodos} />
         <DisplayTodos props={todos} />
         {/* <img src={image} /> */}
       </body>

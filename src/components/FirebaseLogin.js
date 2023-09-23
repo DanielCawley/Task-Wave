@@ -1,9 +1,16 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { Button } from "react-bootstrap";
+import classes from "./FirebaseLogin.module.css";
 
 const FirebaseLogin = () => {
   return (
-    <div>
-      <signInWithEmailAndPassword />
+    <div className={classes.button}>
+      <Button
+        variant="outline-success"
+        style={{ height: "2.5rem", width: "5rem", "font-weight": "bold" }}
+      >
+        Sign In
+      </Button>
     </div>
   );
 };
