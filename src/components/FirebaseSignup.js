@@ -5,13 +5,10 @@ import { useState, useRef, useEffect } from "react";
 
 const SignUpModal = (props) => {
   const inputRef = useRef();
-  const [show, setShow] = useState(false);
+  // const [show, setSho] = useState(props.showModal);
 
-  useEffect(() => {
-    setShow(props.showModal);
-  }, [props]);
   return (
-    <Modal show={show}>
+    <Modal show={props.showModal}>
       <Modal.Header>Sign Up</Modal.Header>
       <Modal.Body>
         <Form>
@@ -48,8 +45,8 @@ const SignUpModal = (props) => {
         <Button
           variant="secondary"
           onClick={() => {
-            console.log("setshow(false)");
-            setShow(false);
+            props.onHide();
+            // basically calls a function to set the showModal variable to False
           }}
         >
           Close
@@ -65,8 +62,11 @@ const FirebaseSignup = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
-    console.log("handleShowModal");
     setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -83,7 +83,11 @@ const FirebaseSignup = () => {
       >
         Sign Up
       </Button>
-      {showModal ? <SignUpModal showModal={showModal} /> : ""}
+      {showModal ? (
+        <SignUpModal showModal={showModal} onHide={handleCloseModal} />
+      ) : (
+        ""
+      )}
 
       <Modal />
     </div>
