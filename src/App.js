@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
+
 import { useState, useRef } from "react";
 import DisplayTodos from "./components/DisplayTodos";
 import MainNavigation from "./components/MainNavigation";
@@ -8,6 +9,7 @@ import MainNavigation from "./components/MainNavigation";
 import image from "./icons/Sea-wave-icon-cartoon-style-vector.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddTodos from "./components/AddTodos";
+import { firebaseConfig } from "./firebase";
 
 import {
   Button,
@@ -22,25 +24,42 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://task-wave-default-rtdb.europe-west1.firebasedatabase.app/todos.json"
+      );
+      const data = await response.json();
+      console.log("data from use effect:", data);
+    };
+
+    fetchData();
+  }, []);
+
   const updateDisplayedTodos = (data) => {
     setTodos(data);
     // here i can also update to firebase
+    console.log("update displated todos");
     addTodosToFirebase(data);
   };
 
   const addTodosToFirebase = async (data) => {
     console.log("adding", data, "to firebase");
-    // const response = await fetch(
-    //   "https://console.firebase.google.com/u/0/project/task-wave/database/task-wave-default-rtdb/data/~2F",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //       "Content-Type": "appliation/json",
-    //     },
-    //   }
-    // );
-    // console.log("Response:", response);
+    try {
+      const response = await fetch(
+        "https://task-wave-default-rtdb.europe-west1.firebasedatabase.app/todos.json",
+        {
+          method: "POST",
+          body: JSON.stringify(todos),
+          headers: {
+            "Content-Type": "appliation/json",
+          },
+        }
+      );
+      console.log("Response:", response);
+    } catch (error) {
+      console.log("error:", error);
+    }
   };
 
   return (
@@ -48,6 +67,7 @@ function App() {
       <MainNavigation />
       <body className="App-main">
         <AddTodos callUpdateDisplayedTodos={updateDisplayedTodos} />
+        <DisplayTodos props={todos} />
         <DisplayTodos props={todos} />
         {/* <img src={image} /> */}
       </body>

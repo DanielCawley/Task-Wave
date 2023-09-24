@@ -1,12 +1,11 @@
 // import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 // import MainNavigation from "./components/MainNavigation";
 // import { Button } from "bootstrap";
 // import image from "./icons/Sea-wave-icon-cartoon-style-vector.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import classes from "./AddTodos.module.css";
-
 import {
   Button,
   Navbar,
@@ -14,14 +13,18 @@ import {
   FormCheck,
   Form,
 } from "react-bootstrap";
+
 function AddTodos(props) {
   const inputRef = useRef();
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  props.callUpdateDisplayedTodos(todos);
+  useEffect(() => {
+    props.callUpdateDisplayedTodos(todos);
+  }, [todos]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const newTodo = inputRef.current.value.trim(); // Remove leading/trailing whitespace
     if (newTodo) {
       setTodos((prev) => [...prev, newTodo]);

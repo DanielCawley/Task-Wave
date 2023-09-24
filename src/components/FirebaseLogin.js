@@ -7,7 +7,7 @@ const FirebaseLogin = () => {
     <div className={classes.button}>
       <Button
         variant="outline-success"
-        style={{ height: "2.5rem", width: "5rem", "font-weight": "bold" }}
+        style={{ height: "2.5rem", width: "5rem", fontWeight: "bold" }}
       >
         Sign In
       </Button>
