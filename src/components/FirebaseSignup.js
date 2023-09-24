@@ -1,14 +1,17 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Form, Modal } from "react-bootstrap";
 import classes from "./FirebaseSignup.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const SignUpModal = () => {
+const SignUpModal = (props) => {
   const inputRef = useRef();
   const [show, setShow] = useState(false);
 
+  useEffect(() => {
+    setShow(props.showModal);
+  }, [props]);
   return (
-    <Modal show={true}>
+    <Modal show={show}>
       <Modal.Header>Sign Up</Modal.Header>
       <Modal.Body>
         <Form>
@@ -42,7 +45,13 @@ const SignUpModal = () => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onSubmit={() => {}}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            console.log("setshow(false)");
+            setShow(false);
+          }}
+        >
           Close
         </Button>
         <Button variant="primary">Save Changes</Button>
@@ -57,7 +66,7 @@ const FirebaseSignup = () => {
 
   const handleShowModal = () => {
     console.log("handleShowModal");
-    setShowModal(!showModal);
+    setShowModal(true);
   };
 
   return (
@@ -74,7 +83,7 @@ const FirebaseSignup = () => {
       >
         Sign Up
       </Button>
-      {showModal ? <SignUpModal /> : ""}
+      {showModal ? <SignUpModal showModal={showModal} /> : ""}
 
       <Modal />
     </div>
