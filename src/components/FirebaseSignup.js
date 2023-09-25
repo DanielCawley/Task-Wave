@@ -1,11 +1,43 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  connectAuthEmulator,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { Button, Form, Modal } from "react-bootstrap";
 import classes from "./FirebaseSignup.module.css";
 import { useState, useRef, useEffect } from "react";
+import app from "../firebase";
+import { getAuth } from "firebase/auth";
+
+// const auth = getAuth(app);
+// console.log("auth =", auth);
+// connectAuthEmulator(auth, "http://localhost:9099");
 
 const SignUpModal = (props) => {
-  const inputRef = useRef();
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
   // const [show, setSho] = useState(props.showModal);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const auth = getAuth(app);
+    console.log("auth =", auth);
+
+    // connectAuthEmulator(auth, "http://localhost:9099");
+    // connectAuthEmulator(auth, "http://127.0.0.1:9099");
+
+    const email = emailInputRef.current.value;
+    const password = emailInputRef.current.value;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("usercredentials", userCredential.user);
+    } catch (error) {
+      console.error("Sign-up error:", error);
+    }
+  };
 
   return (
     <Modal show={props.showModal}>
@@ -14,30 +46,16 @@ const SignUpModal = (props) => {
         <Form>
           <Form.Control
             style={{ width: "15rem", height: "2rem" }}
-            ref={inputRef}
+            ref={emailInputRef}
             placeholder="Enter email address"
-            onChange={() => {
-              // console.log("onChange");
-              // console.log("inputRef.current.length", inputRef.current.value.length);
-              if (inputRef.current.value.length > 80) {
-                console.log("error message");
-              }
-            }}
           />
         </Form>
         <br />
         <Form>
           <Form.Control
             style={{ width: "15rem", height: "2rem" }}
-            ref={inputRef}
+            ref={passwordInputRef}
             placeholder="Enter password"
-            onChange={() => {
-              // console.log("onChange");
-              // console.log("inputRef.current.length", inputRef.current.value.length);
-              if (inputRef.current.value.length > 80) {
-                console.log("error message");
-              }
-            }}
           />
         </Form>
       </Modal.Body>
@@ -51,7 +69,9 @@ const SignUpModal = (props) => {
         >
           Close
         </Button>
-        <Button variant="primary">Save Changes</Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          Save Changes
+        </Button>
       </Modal.Footer>
     </Modal>
   );
