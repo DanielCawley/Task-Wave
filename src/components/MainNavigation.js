@@ -6,6 +6,10 @@ import FirebaseSignup from "./FirebaseSignup";
 import image from "../icons/Sea-wave-icon-cartoon-style-vector.jpg";
 
 const MainNavigation = () => {
+  const handleSignedIn = () => {
+    console.log("user has signed in - from the main navigation file");
+  };
+
   return (
     <div>
       <div className={classes.Nav}>
@@ -15,7 +19,7 @@ const MainNavigation = () => {
         <img src={image} />
         <img src={image} />
         <div className={classes.firebase}>
-          <FirebaseLogin />
+          <FirebaseLogin onSignedIn={handleSignedIn} />
           <FirebaseSignup />
         </div>
       </div>

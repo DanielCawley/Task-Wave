@@ -68,7 +68,7 @@ function App() {
       <body className="App-main">
         <AddTodos callUpdateDisplayedTodos={updateDisplayedTodos} />
         <DisplayTodos props={todos} />
-        <DisplayTodos props={todos} />
+        {/* <DisplayTodos props={todos} /> */}
         {/* <img src={image} /> */}
       </body>
     </div>

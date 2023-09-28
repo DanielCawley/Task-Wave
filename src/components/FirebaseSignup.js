@@ -26,7 +26,7 @@ const SignUpModal = (props) => {
     // connectAuthEmulator(auth, "http://127.0.0.1:9099");
 
     const email = emailInputRef.current.value;
-    const password = emailInputRef.current.value;
+    const password = passwordInputRef.current.value;
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -78,7 +78,6 @@ const SignUpModal = (props) => {
 };
 
 const FirebaseSignup = () => {
-  console.log("classes", classes);
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {

@@ -1,7 +1,4 @@
-import {
-  connectAuthEmulator,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { connectAuthEmulator, signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Form, Modal } from "react-bootstrap";
 import classes from "./FirebaseLogin.module.css";
 import { useState, useRef, useEffect } from "react";
@@ -15,25 +12,28 @@ import { getAuth } from "firebase/auth";
 const SignUpModal = (props) => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  // const [show, setSho] = useState(props.showModal);
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    console.log("useEffect - props.onSIgnedIn");
+    props.onSignedIn();
+  }, [signedIn]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const auth = getAuth(app);
     console.log("auth =", auth);
 
-    // connectAuthEmulator(auth, "http://localhost:9099");
-    // connectAuthEmulator(auth, "http://127.0.0.1:9099");
-
     const email = emailInputRef.current.value;
-    const password = emailInputRef.current.value;
+    const password = passwordInputRef.current.value;
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
       console.log("usercredentials", userCredential.user);
+      setSignedIn(true);
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -77,8 +77,7 @@ const SignUpModal = (props) => {
   );
 };
 
-const FirebaseLogin = () => {
-  console.log("classes", classes);
+const FirebaseLogin = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -87,6 +86,10 @@ const FirebaseLogin = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const onSignedIn = () => {
+    props.onSignedIn();
   };
 
   return (
@@ -99,7 +102,11 @@ const FirebaseLogin = () => {
         Login
       </Button>
       {showModal ? (
-        <SignUpModal showModal={showModal} onHide={handleCloseModal} />
+        <SignUpModal
+          showModal={showModal}
+          onHide={handleCloseModal}
+          onSignedIn={onSignedIn}
+        />
       ) : (
         ""
       )}
