@@ -39,7 +39,7 @@ function App() {
   const updateDisplayedTodos = (data) => {
     setTodos(data);
     // here i can also update to firebase
-    console.log("update displated todos");
+    // console.log("update displated todos");
     addTodosToFirebase(data);
   };
 
@@ -62,14 +62,15 @@ function App() {
     }
   };
 
+  // function to grab the todos from firebase, knowing the user UIS and
+  const fetchTodosFromFirebase = (userUID) => {};
+
   return (
     <div className="App">
       <MainNavigation />
       <body className="App-main">
         <AddTodos callUpdateDisplayedTodos={updateDisplayedTodos} />
         <DisplayTodos props={todos} />
-        {/* <DisplayTodos props={todos} /> */}
-        {/* <img src={image} /> */}
       </body>
     </div>
   );

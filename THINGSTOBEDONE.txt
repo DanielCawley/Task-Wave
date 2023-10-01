@@ -1,0 +1,5 @@
+make it so that when you are logged in, it says logged in and changes the components on the main navigation part
+make it so that when you are logged in, the todos get saved to the realtime database with the key to those
+todos being the user uid on firebase
+make it so that when you are logged in, any previously saved todos in the database get added to the current todos liost
+make it responsive

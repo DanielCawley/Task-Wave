@@ -10,10 +10,12 @@ import { getAuth } from "firebase/auth";
 // connectAuthEmulator(auth, "http://localhost:9099");
 
 const SignUpModal = (props) => {
+  console.log("sign up modal is here");
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [signedIn, setSignedIn] = useState(false);
 
+  // why is this called, when the login button is pressed
   useEffect(() => {
     console.log("useEffect - props.onSIgnedIn");
     props.onSignedIn();
@@ -22,7 +24,6 @@ const SignUpModal = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const auth = getAuth(app);
-    console.log("auth =", auth);
 
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
@@ -33,7 +34,10 @@ const SignUpModal = (props) => {
         password
       );
       console.log("usercredentials", userCredential.user);
+      // const data = await userCredential.json();
+      // console.log("data:", data);
       setSignedIn(true);
+      console.log("user has successfully signed in");
     } catch (error) {
       console.error("Login error:", error);
     }

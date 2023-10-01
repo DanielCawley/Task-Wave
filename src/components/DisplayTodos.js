@@ -4,7 +4,7 @@ import classes from "./DisplayTodos.module.css";
 
 const DisplayTodos = (inputInformation) => {
   const { props } = inputInformation;
-  console.log(props);
+  // console.log(props);
 
   return (
     <div>
