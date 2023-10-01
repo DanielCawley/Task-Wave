@@ -15,12 +15,6 @@ const SignUpModal = (props) => {
   const passwordInputRef = useRef();
   const [signedIn, setSignedIn] = useState(false);
 
-  // why is this called, when the login button is pressed
-  useEffect(() => {
-    console.log("useEffect - props.onSIgnedIn");
-    props.onSignedIn();
-  }, [signedIn]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const auth = getAuth(app);
@@ -36,8 +30,8 @@ const SignUpModal = (props) => {
       console.log("usercredentials", userCredential.user);
       // const data = await userCredential.json();
       // console.log("data:", data);
-      setSignedIn(true);
-      console.log("user has successfully signed in");
+      props.onSignedIn();
+      props.onHide();
     } catch (error) {
       console.error("Login error:", error);
     }
